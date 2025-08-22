@@ -13,7 +13,7 @@ const { submitQuantiaDxRequisition } = require("./controllers/quantiaDX");
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files if needed (e.g., CSS, JS)
-app.use(express.static(path.join(__dirname, "requisition")));
+app.use(express.static(path.join(__dirname, "requisitions")));
 
 app.get("/", (req, res) => {
     res.send("Dashboard");
