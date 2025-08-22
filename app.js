@@ -24,7 +24,7 @@ app.get("/neurapath", (req, res) => {
     res.sendFile(
         path.join(
             __dirname,
-            "requisition",
+            "requisitions",
             "Neurapath_diagnostics",
             "Neurapath_diagnostics.html",
         ),
@@ -35,7 +35,7 @@ app.get("/vitasure", (req, res) => {
     res.sendFile(
         path.join(
             __dirname,
-            "requisition",
+            "requisitions",
             "Vitasure_labs",
             "Vitasure_labs.html",
         ),
@@ -44,7 +44,7 @@ app.get("/vitasure", (req, res) => {
 
 app.get("/quantiadx", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "requisition", "QuantiaDX", "QuantiaDX.html"),
+        path.join(__dirname, "requisitions", "QuantiaDX", "QuantiaDX.html"),
     );
 });
 
