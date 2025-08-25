@@ -11,6 +11,7 @@ const {
 const { submitVitaSureRequisition } = require("./controllers/vitasure_labs");
 const { submitQuantiaDxRequisition } = require("./controllers/quantiaDX");
 
+const ehrData = {};
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -60,10 +61,10 @@ app.post("/submit-quantiadx", submitQuantiaDxRequisition);
 const PORT = 3000;
 app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    
+
     // Load EHR data on startup
     console.log("Loading EHR data...");
-    const ehrData = await fetchAndFormatUserData();
+    ehrData = await fetchAndFormatUserData();
     if (ehrData) {
         console.log("EHR data loaded successfully");
     } else {
