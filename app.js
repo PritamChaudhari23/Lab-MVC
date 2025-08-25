@@ -11,9 +11,13 @@ const {
 const { submitVitaSureRequisition } = require("./controllers/vitasure_labs");
 const { submitQuantiaDxRequisition } = require("./controllers/quantiaDX");
 
-const ehrData = {};
+let ehrData = {};
 
 app.use(express.urlencoded({ extended: true }));
+
+// Set EJS as template engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Serve static files if needed (e.g., CSS, JS)
 app.use(express.static(path.join(__dirname, "requisitions")));
@@ -22,33 +26,17 @@ app.get("/", (req, res) => {
     res.send("Dashboard");
 });
 
-// Routes to serve HTML forms
+// Routes to serve HTML forms with EHR data
 app.get("/neurapath", (req, res) => {
-    res.sendFile(
-        path.join(
-            __dirname,
-            "requisitions",
-            "Neurapath_diagnostics",
-            "Neurapath_diagnostics.html",
-        ),
-    );
+    res.render('neurapath_diagnostics', { ehrData: ehrData });
 });
 
 app.get("/vitasure", (req, res) => {
-    res.sendFile(
-        path.join(
-            __dirname,
-            "requisitions",
-            "Vitasure_labs",
-            "Vitasure_labs.html",
-        ),
-    );
+    res.render('vitasure_labs', { ehrData: ehrData });
 });
 
 app.get("/quantiadx", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "requisitions", "QuantiaDx", "QuantiaDx.html"),
-    );
+    res.render('quantiadx', { ehrData: ehrData });
 });
 
 // POST routes to handle form submissions

@@ -23,7 +23,7 @@
               type="text"
               id="firstname"
               name="firstname"
-              value="<%= patient?.firstname || '' %>"
+              value="<%= ehrData.patient?.firstname || '' %>"
               required
             />
 
@@ -32,7 +32,7 @@
               type="text"
               id="middlename"
               name="middlename"
-              value="<%= patient?.middlename || '' %>"
+              value="<%= ehrData.patient?.middlename || '' %>"
             />
 
             <label for="lastname">Last Name:</label>
@@ -40,17 +40,17 @@
               type="text"
               id="lastname"
               name="lastname"
-              value="<%= patient?.lastname || '' %>"
+              value="<%= ehrData.patient?.lastname || '' %>"
               required
             />
 
             <label for="gender">Gender:</label>
             <select id="gender" name="gender" required>
               <option value="">--Select--</option>
-              <option value="female" <%= patient?.gender === 'female' ? 'selected' : '' %>>Female</option>
-              <option value="male" <%= patient?.gender === 'male' ? 'selected' : '' %>>Male</option>
-              <option value="other" <%= patient?.gender === 'other' ? 'selected' : '' %>>Other</option>
-              <option value="prefer-not-say" <%= patient?.gender === 'prefer-not-say' ? 'selected' : '' %>>Prefer not to say</option>
+              <option value="female" <%= ehrData.patient?.gender === 'female' ? 'selected' : '' %>>Female</option>
+              <option value="male" <%= ehrData.patient?.gender === 'male' ? 'selected' : '' %>>Male</option>
+              <option value="other" <%= ehrData.patient?.gender === 'other' ? 'selected' : '' %>>Other</option>
+              <option value="prefer-not-say" <%= ehrData.patient?.gender === 'prefer-not-say' ? 'selected' : '' %>>Prefer not to say</option>
             </select>
 
             <label for="dob">Date of Birth:</label>
@@ -58,7 +58,7 @@
               type="date"
               id="dob"
               name="dob"
-              value="<%= patient?.dob || '' %>"
+              value="<%= ehrData.patient?.dob || '' %>"
               required
             />
 
@@ -67,7 +67,7 @@
               type="email"
               id="email"
               name="email"
-              value="<%= patient?.email || '' %>"
+              value="<%= ehrData.patient?.email || '' %>"
             />
 
             <label for="phone">Phone:</label>
@@ -75,7 +75,7 @@
               type="tel"
               id="phone"
               name="phone"
-              value="<%= patient?.phone || '' %>"
+              value="<%= ehrData.patient?.phone || '' %>"
             />
           </fieldset>
 
@@ -87,7 +87,7 @@
               type="text"
               id="insurance-provider"
               name="insurance-provider"
-              value="<%= insurance?.provider || '' %>"
+              value="<%= ehrData.insurance?.provider || '' %>"
             />
 
             <label for="insurance-id">Insurance ID:</label>
@@ -95,7 +95,7 @@
               type="text"
               id="insurance-id"
               name="insurance-id"
-              value="<%= insurance?.id || '' %>"
+              value="<%= ehrData.insurance?.id || '' %>"
             />
           </fieldset>
 
@@ -107,7 +107,7 @@
               type="text"
               id="provider-name"
               name="provider-name"
-              value="<%= provider?.name || '' %>"
+              value="<%= ehrData.provider?.name || '' %>"
               required
             />
 
@@ -116,7 +116,7 @@
               type="text"
               id="npi-number"
               name="npi-number"
-              value="<%= provider?.npi || '' %>"
+              value="<%= ehrData.provider?.npi || '' %>"
             />
 
             <label for="provider-address">Address:</label>
@@ -124,7 +124,7 @@
               id="provider-address"
               name="provider-address"
               rows="3"
-            ><%= provider?.address || '' %></textarea>
+            ><%= ehrData.provider?.address || '' %></textarea>
           </fieldset>
         </section>
 
