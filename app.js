@@ -44,7 +44,7 @@ app.get("/vitasure", (req, res) => {
 
 app.get("/quantiadx", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "requisitions", "QuantiaDX", "QuantiaDX.html"),
+        path.join(__dirname, "requisitions", "QuantiaDx", "QuantiaDx.html"),
     );
 });
 

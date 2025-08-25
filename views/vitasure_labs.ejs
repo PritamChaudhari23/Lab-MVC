@@ -10,74 +10,122 @@
     <main>
       <h1>VitaSure Labs - Test Requisition Form</h1>
       <form action="/submit-vitasure" method="post">
-        <!-- Static Section -->
+        <!-- Dynamic Patient Info -->
         <section id="patient-info">
           <fieldset>
             <legend>Patient Demographics</legend>
+
             <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" required />
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              value="<%= patient?.firstname || '' %>"
+              required
+            />
 
             <label for="middlename">Middle Name:</label>
-            <input type="text" id="middlename" name="middlename" />
+            <input
+              type="text"
+              id="middlename"
+              name="middlename"
+              value="<%= patient?.middlename || '' %>"
+            />
 
             <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" required />
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              value="<%= patient?.lastname || '' %>"
+              required
+            />
 
             <label for="gender">Gender:</label>
             <select id="gender" name="gender" required>
               <option value="">--Select--</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-              <option value="prefer-not-say">Prefer not to say</option>
+              <option value="female" <%= patient?.gender === 'female' ? 'selected' : '' %>>Female</option>
+              <option value="male" <%= patient?.gender === 'male' ? 'selected' : '' %>>Male</option>
+              <option value="other" <%= patient?.gender === 'other' ? 'selected' : '' %>>Other</option>
+              <option value="prefer-not-say" <%= patient?.gender === 'prefer-not-say' ? 'selected' : '' %>>Prefer not to say</option>
             </select>
 
             <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" required />
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              value="<%= patient?.dob || '' %>"
+              required
+            />
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= patient?.email || '' %>"
+            />
 
             <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" />
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value="<%= patient?.phone || '' %>"
+            />
           </fieldset>
 
           <fieldset>
             <legend>Insurance Information</legend>
+
             <label for="insurance-provider">Insurance Provider:</label>
             <input
               type="text"
               id="insurance-provider"
               name="insurance-provider"
+              value="<%= insurance?.provider || '' %>"
             />
 
             <label for="insurance-id">Insurance ID:</label>
-            <input type="text" id="insurance-id" name="insurance-id" />
+            <input
+              type="text"
+              id="insurance-id"
+              name="insurance-id"
+              value="<%= insurance?.id || '' %>"
+            />
           </fieldset>
 
           <fieldset>
             <legend>Provider Information</legend>
+
             <label for="provider-name">Provider Name:</label>
             <input
               type="text"
               id="provider-name"
               name="provider-name"
+              value="<%= provider?.name || '' %>"
               required
             />
 
             <label for="npi-number">NPI Number:</label>
-            <input type="text" id="npi-number" name="npi-number" />
+            <input
+              type="text"
+              id="npi-number"
+              name="npi-number"
+              value="<%= provider?.npi || '' %>"
+            />
 
             <label for="provider-address">Address:</label>
             <textarea
               id="provider-address"
               name="provider-address"
               rows="3"
-            ></textarea>
+            ><%= provider?.address || '' %></textarea>
           </fieldset>
         </section>
 
-        <!-- Dynamic Section -->
+        <!-- Static Test Panel -->
         <section id="test-panel">
           <fieldset>
             <legend>Test Panel - VitaSure Labs</legend>

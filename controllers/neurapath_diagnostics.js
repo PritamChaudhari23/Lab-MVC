@@ -1,29 +1,27 @@
 const submitNeuraPathRequisition = (req, res) => {
-  const firstName = req.body["firstname"];
-  const middleName = req.body["middlename"];
-  const lastName = req.body["lastname"];
-  const gender = req.body["gender"];
-  const dob = req.body["dob"];
-  const email = req.body["email"];
-  const phone = req.body["phone"];
+  const labOrder = {
+    patient: {
+      firstName: req.body["firstname"],
+      middleName: req.body["middlename"],
+      lastName: req.body["lastname"],
+      gender: req.body["gender"],
+      dob: req.body["dob"],
+      email: req.body["email"],
+      phone: req.body["phone"],
+    },
+    insurance: {
+      provider: req.body["insurance-provider"],
+      id: req.body["insurance-id"],
+    },
+    provider: {
+      name: req.body["provider-name"],
+      npi: req.body["npi-number"],
+      address: req.body["provider-address"],
+    },
+    tests: req.body["tests"] || [],
+  };
 
-  const insuranceProvider = req.body["insurance-provider"];
-  const insuranceId = req.body["insurance-id"];
-
-  const providerName = req.body["provider-name"];
-  const npiNumber = req.body["npi-number"];
-  const providerAddress = req.body["provider-address"];
-
-  // tests is an array of selected tests, or undefined if none selected
-  const selectedTests = req.body["tests"];
-
-  console.log("NeuraPath Diagnostics Form Submitted!");
-  console.log("Patient:", firstName, middleName, lastName);
-  console.log("Gender:", gender, "DOB:", dob);
-  console.log("Email:", email, "Phone:", phone);
-  console.log("Insurance:", insuranceProvider, insuranceId);
-  console.log("Provider:", providerName, npiNumber, providerAddress);
-  console.log("Selected Tests:", selectedTests);
+  console.log("NeuraPath Lab Order Submitted:", labOrder);
 
   res.send("NeuraPath Diagnostics form submitted successfully!");
 };
