@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+const { fetchAndFormatUserData } = require("./ehr");
+
 const {
     submitNeuraPathRequisition,
 } = require("./controllers/neurapath_diagnostics");
@@ -56,6 +58,15 @@ app.post("/submit-vitasure", submitVitaSureRequisition);
 app.post("/submit-quantiadx", submitQuantiaDxRequisition);
 
 const PORT = 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+    
+    // Load EHR data on startup
+    console.log("Loading EHR data...");
+    const ehrData = await fetchAndFormatUserData();
+    if (ehrData) {
+        console.log("EHR data loaded successfully");
+    } else {
+        console.log("Failed to load EHR data");
+    }
 });
