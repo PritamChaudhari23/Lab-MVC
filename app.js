@@ -7,8 +7,8 @@ const {
 } = require("./controllers/neurapath_diagnostics");
 
 const { submitVitaSureRequisition } = require("./controllers/vitasure_labs");
-
 const { submitQuantiaDxRequisition } = require("./controllers/quantiaDX");
+
 
 app.use(express.urlencoded({ extended: true }));
 

@@ -35,5 +35,6 @@ async function fetchAndFormatUserData() {
   }
 }
 
-// Example call
-fetchAndFormatUserData();
+module.exports = {
+  fetchAndFormatUserData,
+};
