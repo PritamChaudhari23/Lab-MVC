@@ -19,7 +19,7 @@ let ehrData = {};
     ehrData = await fetchAndFormatUserData();
     console.log("EHR data loaded");
 
-    // 3.Start server LAST
+    // 3.Start server
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
