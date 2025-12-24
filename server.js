@@ -3,23 +3,15 @@ dotenv.config();
 
 const app = require("./app");
 const connectDB = require("./config/database");
-const { fetchAndFormatUserData } = require("./ehr");
 
 const PORT = process.env.PORT || 3000;
-
-let ehrData = {};
 
 (async function startServer() {
   try {
     // 1.Connect to DB
     await connectDB();
 
-    // 2.Load EHR data before serving traffic
-    console.log("Loading EHR data...");
-    ehrData = await fetchAndFormatUserData();
-    console.log("EHR data loaded");
-
-    // 3.Start server
+    // 2.Start server
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
