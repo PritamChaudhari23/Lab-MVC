@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const { fetchAndFormatUserData } = require("./ehr");
 
 const {
   submitNeuraPathRequisition,
@@ -55,16 +56,34 @@ app.get("/quantiadx-static", (req, res) => {
 
 // ========== EJS-Based Routes (Dynamic) ==========
 
-app.get("/neurapath", (req, res) => {
-  res.render("neurapath_diagnostics", { ehrData: ehrData });
+app.get("/neurapath", async (req, res) => {
+  try {
+    const ehrData = await fetchAndFormatUserData();
+    res.render("neurapath_diagnostics", { ehrData });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
 });
 
-app.get("/vitasure", (req, res) => {
-  res.render("vitasure_labs", { ehrData: ehrData });
+app.get("/vitasure", async (req, res) => {
+  try {
+    const ehrData = await fetchAndFormatUserData();
+    res.render("vitasure_labs", { ehrData });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
 });
 
-app.get("/quantiadx", (req, res) => {
-  res.render("quantiadx", { ehrData: ehrData });
+app.get("/quantiadx", async (req, res) => {
+  try {
+    const ehrData = await fetchAndFormatUserData();
+    res.render("quantiadx", { ehrData });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
 });
 
 // ========== POST Routes ==========
