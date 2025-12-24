@@ -2,28 +2,28 @@ const axios = require("axios");
 
 async function fetchAndFormatUserData() {
   try {
-    const response = await axios.get("https://dummyjson.com/users/3");
+    const response = await axios.get("https://dummyjson.com/users/4");
     const data = response.data;
 
     // Map API data to your requisition form structure
     const reqObj = {
       patient: {
-        firstname: data.firstName || "John",
-        middlename: "", // No middle name in API, dummy empty
-        lastname: data.lastName || "Doe",
-        gender: data.gender || "prefer-not-say",
-        dob: data.birthDate || "1990-01-01", // dummy if missing
-        email: data.email || "john.doe@example.com",
-        phone: data.phone || "555-123-4567",
+        firstname: data.firstName || "Michael",
+        middlename: data.middleName || "Andrew",
+        lastname: data.lastName || "Thompson",
+        gender: data.gender || "male",
+        dob: data.birthDate || "1987-09-14",
+        email: data.email || "michael.thompson87@gmail.com",
+        phone: data.phone || "617-555-8392",
       },
       insurance: {
-        provider: "", // No insurance info in API, dummy empty
-        id: "",
+        provider: "Blue Cross Blue Shield",
+        id: "BCBS-MA-784392615",
       },
       provider: {
-        name: "", // No provider info in API, dummy empty
-        npi: "",
-        address: "",
+        name: "Dr. Sarah L. Martinez, MD",
+        npi: "1467583920",
+        address: "1250 Medical Plaza Dr, Suite 420, Boston, MA 02115",
       },
     };
 

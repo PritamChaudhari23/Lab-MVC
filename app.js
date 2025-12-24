@@ -1,19 +1,21 @@
 const express = require("express");
 const path = require("path");
-const app = express();
-
-const { fetchAndFormatUserData } = require("./ehr");
 
 const {
-    submitNeuraPathRequisition,
-} = require("./controllers/neurapath_diagnostics");
+  submitNeuraPathRequisition,
+} = require("./controllers-mongoose/neurapath_diagnostics");
+const {
+  submitVitaSureRequisition,
+} = require("./controllers-mongoose/vitasure_labs");
+const {
+  submitQuantiaDxRequisition,
+} = require("./controllers-mongoose/quantiaDX");
 
-const { submitVitaSureRequisition } = require("./controllers/vitasure_labs");
-const { submitQuantiaDxRequisition } = require("./controllers/quantiaDX");
+const app = express();
 
-let ehrData = {};
-
+// Middleware
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Set EJS as template engine
 app.set("view engine", "ejs");
@@ -24,52 +26,45 @@ app.use(express.static(path.join(__dirname, "requisitions")));
 
 // Dashboard route
 app.get("/", (req, res) => {
-    res.send("Dashboard");
+  res.send("Dashboard");
 });
 
-// ========== ✅ EJS-Based Routes (Dynamic) ==========
-
-app.get("/neurapath", (req, res) => {
-    res.render("neurapath_diagnostics", { ehrData: ehrData });
-});
-
-app.get("/vitasure", (req, res) => {
-    res.render("vitasure_labs", { ehrData: ehrData });
-});
-
-app.get("/quantiadx", (req, res) => {
-    res.render("quantiadx", { ehrData: ehrData });
-});
-
-// ========== 🧪 Dummy Static Routes (sendFile-based) ==========
-// These are just for testing or static version comparison
-
+// ========== Dummy Static Routes (sendFile-based) ==========
 app.get("/neurapath-static", (req, res) => {
-    res.sendFile(
-        path.join(
-            __dirname,
-            "requisitions",
-            "Neurapath_diagnostics",
-            "Neurapath_diagnostics.html",
-        ),
-    );
+  res.sendFile(
+    path.join(
+      __dirname,
+      "requisitions",
+      "Neurapath_diagnostics",
+      "Neurapath_diagnostics.html"
+    )
+  );
 });
 
 app.get("/vitasure-static", (req, res) => {
-    res.sendFile(
-        path.join(
-            __dirname,
-            "requisitions",
-            "Vitasure_labs",
-            "Vitasure_labs.html",
-        ),
-    );
+  res.sendFile(
+    path.join(__dirname, "requisitions", "Vitasure_labs", "Vitasure_labs.html")
+  );
 });
 
 app.get("/quantiadx-static", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "requisitions", "QuantiaDx", "QuantiaDx.html"),
-    );
+  res.sendFile(
+    path.join(__dirname, "requisitions", "QuantiaDx", "QuantiaDx.html")
+  );
+});
+
+// ========== EJS-Based Routes (Dynamic) ==========
+
+app.get("/neurapath", (req, res) => {
+  res.render("neurapath_diagnostics", { ehrData: ehrData });
+});
+
+app.get("/vitasure", (req, res) => {
+  res.render("vitasure_labs", { ehrData: ehrData });
+});
+
+app.get("/quantiadx", (req, res) => {
+  res.render("quantiadx", { ehrData: ehrData });
 });
 
 // ========== POST Routes ==========
@@ -78,18 +73,4 @@ app.post("/submit-neurapath", submitNeuraPathRequisition);
 app.post("/submit-vitasure", submitVitaSureRequisition);
 app.post("/submit-quantiadx", submitQuantiaDxRequisition);
 
-// ========== Server Startup ==========
-
-const PORT = 3000;
-app.listen(PORT, async () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-
-    // Load EHR data on startup
-    console.log("Loading EHR data...");
-    ehrData = await fetchAndFormatUserData();
-    if (ehrData) {
-        console.log("EHR data loaded successfully");
-    } else {
-        console.log("Failed to load EHR data");
-    }
-});
+module.exports = app;

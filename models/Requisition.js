@@ -1,6 +1,3 @@
-// ========== Mongoose Models ==========
-
-// Example: Requisition Model
 const mongoose = require("mongoose");
 
 const requisitionSchema = new mongoose.Schema({

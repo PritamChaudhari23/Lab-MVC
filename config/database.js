@@ -1,17 +1,11 @@
-// ========== Database Configuration ==========
-
 const mongoose = require("mongoose");
 
-// MongoDB Connection Function
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb://localhost:27017/lab-mvc", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.CONNECTION_STRING);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error("MongoDB connection error:", error.message);
+    console.error("MongoDB connection error:", error);
     process.exit(1);
   }
 };
