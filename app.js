@@ -1,21 +1,10 @@
 const express = require("express");
 const path = require("path");
 
-const {
-  getNeuraPathStatic,
-  getNeuraPathForm,
-  submitNeuraPathRequisition,
-} = require("./controllers-mongoose/neurapath_diagnostics");
-const {
-  getVitaSureStatic,
-  getVitaSureForm,
-  submitVitaSureRequisition,
-} = require("./controllers-mongoose/vitasure_labs");
-const {
-  getQuantiaDxStatic,
-  getQuantiaDxForm,
-  submitQuantiaDxRequisition,
-} = require("./controllers-mongoose/quantiaDX");
+// Import routers
+const neurapathRouter = require("./routes/neurapathRoutes");
+const vitasureRouter = require("./routes/vitasureRoutes");
+const quantiadxRouter = require("./routes/quantiadxRoutes");
 
 const app = express();
 
@@ -35,27 +24,9 @@ app.get("/", (req, res) => {
   res.send("Dashboard");
 });
 
-// ========== Dummy Static Routes (sendFile-based) ==========
-app.get("/neurapath-static", getNeuraPathStatic);
-
-app.get("/vitasure-static", getVitaSureStatic);
-
-app.get("/quantiadx-static", getQuantiaDxStatic);
-
-// ========== EJS-Based Routes (Dynamic) ==========
-
-app.get("/neurapath", getNeuraPathForm);
-
-app.get("/vitasure", getVitaSureForm);
-
-app.get("/quantiadx", getQuantiaDxForm);
-
-// ========== POST Routes ==========
-
-app.post("/submit-neurapath", submitNeuraPathRequisition);
-app.post("/submit-vitasure", submitVitaSureRequisition);
-app.post("/submit-quantiadx", submitQuantiaDxRequisition);
+// ========== Mount Routers ==========
+app.use("/neurapath", neurapathRouter);
+app.use("/vitasure", vitasureRouter);
+app.use("/quantiadx", quantiadxRouter);
 
 module.exports = app;
-
-// TO-DO: Try to use express Router for better route management
