@@ -93,3 +93,6 @@ app.post("/submit-vitasure", submitVitaSureRequisition);
 app.post("/submit-quantiadx", submitQuantiaDxRequisition);
 
 module.exports = app;
+
+// TO-DO: Shift get routes to conrollers as well for better modularity
+// TO-DO: Try to use express Router for better route management
