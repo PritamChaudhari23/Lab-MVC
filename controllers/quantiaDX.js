@@ -1,5 +1,5 @@
 const path = require("path");
-const LabOrders = require("../models/Requisition");
+const LabOrders = require("../models/LabOrder");
 const { fetchAndFormatPatientData } = require("../ehr");
 
 const getQuantiaDxStatic = (req, res) => {

@@ -5,7 +5,7 @@ const {
   getNeuraPathStatic,
   getNeuraPathForm,
   submitNeuraPathRequisition,
-} = require("../controllers-mongoose/neurapath_diagnostics");
+} = require("../controllers/neurapath_diagnostics");
 
 // Static route
 router.get("/static", getNeuraPathStatic);

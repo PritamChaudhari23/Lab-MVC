@@ -5,7 +5,7 @@ const {
   getQuantiaDxStatic,
   getQuantiaDxForm,
   submitQuantiaDxRequisition,
-} = require("../controllers-mongoose/quantiaDX");
+} = require("../controllers/quantiaDX");
 
 // Static route
 router.get("/static", getQuantiaDxStatic);

@@ -5,7 +5,7 @@ const {
   getVitaSureStatic,
   getVitaSureForm,
   submitVitaSureRequisition,
-} = require("../controllers-mongoose/vitasure_labs");
+} = require("../controllers/vitasure_labs");
 
 // Static route
 router.get("/static", getVitaSureStatic);

@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.send("Dashboard");
 });
 
-// ========== Mount Routers ==========
+// Mount routers
 app.use("/neurapath", neurapathRouter);
 app.use("/vitasure", vitasureRouter);
 app.use("/quantiadx", quantiadxRouter);
