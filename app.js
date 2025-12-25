@@ -1,14 +1,19 @@
 const express = require("express");
 const path = require("path");
-const { fetchAndFormatUserData } = require("./ehr");
 
 const {
+  getNeuraPathStatic,
+  getNeuraPathForm,
   submitNeuraPathRequisition,
 } = require("./controllers-mongoose/neurapath_diagnostics");
 const {
+  getVitaSureStatic,
+  getVitaSureForm,
   submitVitaSureRequisition,
 } = require("./controllers-mongoose/vitasure_labs");
 const {
+  getQuantiaDxStatic,
+  getQuantiaDxForm,
   submitQuantiaDxRequisition,
 } = require("./controllers-mongoose/quantiaDX");
 
@@ -31,60 +36,19 @@ app.get("/", (req, res) => {
 });
 
 // ========== Dummy Static Routes (sendFile-based) ==========
-app.get("/neurapath-static", (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "requisitions",
-      "Neurapath_diagnostics",
-      "Neurapath_diagnostics.html"
-    )
-  );
-});
+app.get("/neurapath-static", getNeuraPathStatic);
 
-app.get("/vitasure-static", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "requisitions", "Vitasure_labs", "Vitasure_labs.html")
-  );
-});
+app.get("/vitasure-static", getVitaSureStatic);
 
-app.get("/quantiadx-static", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "requisitions", "QuantiaDx", "QuantiaDx.html")
-  );
-});
+app.get("/quantiadx-static", getQuantiaDxStatic);
 
 // ========== EJS-Based Routes (Dynamic) ==========
 
-app.get("/neurapath", async (req, res) => {
-  try {
-    const ehrData = await fetchAndFormatUserData();
-    res.render("neurapath_diagnostics", { ehrData });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Failed to load EHR data");
-  }
-});
+app.get("/neurapath", getNeuraPathForm);
 
-app.get("/vitasure", async (req, res) => {
-  try {
-    const ehrData = await fetchAndFormatUserData();
-    res.render("vitasure_labs", { ehrData });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Failed to load EHR data");
-  }
-});
+app.get("/vitasure", getVitaSureForm);
 
-app.get("/quantiadx", async (req, res) => {
-  try {
-    const ehrData = await fetchAndFormatUserData();
-    res.render("quantiadx", { ehrData });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Failed to load EHR data");
-  }
-});
+app.get("/quantiadx", getQuantiaDxForm);
 
 // ========== POST Routes ==========
 
@@ -94,5 +58,4 @@ app.post("/submit-quantiadx", submitQuantiaDxRequisition);
 
 module.exports = app;
 
-// TO-DO: Shift get routes to conrollers as well for better modularity
 // TO-DO: Try to use express Router for better route management

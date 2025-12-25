@@ -1,6 +1,22 @@
-// ========== QuantiaDx Controller with Mongoose ==========
-
+const path = require("path");
 const LabOrders = require("../models/Requisition");
+const { fetchAndFormatPatientData } = require("../ehr");
+
+const getQuantiaDxStatic = (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "requisitions", "QuantiaDx", "QuantiaDx.html")
+  );
+};
+
+const getQuantiaDxForm = async (req, res) => {
+  try {
+    const patientEHR = await fetchAndFormatPatientData();
+    res.render("quantiadx", { ehrData: patientEHR });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
+};
 
 const submitQuantiaDxRequisition = async (req, res) => {
   const order = {
@@ -44,5 +60,7 @@ const submitQuantiaDxRequisition = async (req, res) => {
 };
 
 module.exports = {
+  getQuantiaDxStatic,
+  getQuantiaDxForm,
   submitQuantiaDxRequisition,
 };

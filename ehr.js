@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-async function fetchAndFormatUserData() {
+async function fetchAndFormatPatientData() {
   try {
     const response = await axios.get("https://dummyjson.com/users/4");
     const data = response.data;
@@ -36,5 +36,5 @@ async function fetchAndFormatUserData() {
 }
 
 module.exports = {
-  fetchAndFormatUserData,
+  fetchAndFormatPatientData,
 };

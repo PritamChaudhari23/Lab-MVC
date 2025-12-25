@@ -1,6 +1,28 @@
-// ========== VitaSure Labs Controller with Mongoose ==========
-
+const path = require("path");
 const LabOrders = require("../models/Requisition");
+const { fetchAndFormatPatientData } = require("../ehr");
+
+const getVitaSureStatic = (req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "..",
+      "requisitions",
+      "Vitasure_labs",
+      "Vitasure_labs.html"
+    )
+  );
+};
+
+const getVitaSureForm = async (req, res) => {
+  try {
+    const patientEHR = await fetchAndFormatPatientData();
+    res.render("vitasure_labs", { ehrData: patientEHR });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
+};
 
 const submitVitaSureRequisition = async (req, res) => {
   const order = {
@@ -44,5 +66,7 @@ const submitVitaSureRequisition = async (req, res) => {
 };
 
 module.exports = {
+  getVitaSureStatic,
+  getVitaSureForm,
   submitVitaSureRequisition,
 };

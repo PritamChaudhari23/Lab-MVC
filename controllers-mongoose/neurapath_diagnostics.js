@@ -1,6 +1,28 @@
-// ========== NeuraPath Diagnostics Controller with Mongoose ==========
-
+const path = require("path");
 const LabOrders = require("../models/LabOrder");
+const { fetchAndFormatPatientData } = require("../ehr");
+
+const getNeuraPathStatic = (req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "..",
+      "requisitions",
+      "Neurapath_diagnostics",
+      "Neurapath_diagnostics.html"
+    )
+  );
+};
+
+const getNeuraPathForm = async (req, res) => {
+  try {
+    const patientEHR = await fetchAndFormatPatientData();
+    res.render("neurapath_diagnostics", { ehrData: patientEHR });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load EHR data");
+  }
+};
 
 const submitNeuraPathRequisition = async (req, res) => {
   const order = {
@@ -44,5 +66,7 @@ const submitNeuraPathRequisition = async (req, res) => {
 };
 
 module.exports = {
+  getNeuraPathStatic,
+  getNeuraPathForm,
   submitNeuraPathRequisition,
 };
