@@ -14,6 +14,6 @@ router.get("/static", getNeuraPathStatic);
 router.get("/requisition", getNeuraPathForm);
 
 // Submit route
-router.post("/submitNeurapath", submitNeuraPathRequisition);
+router.post("/submit", submitNeuraPathRequisition);
 
 module.exports = router;

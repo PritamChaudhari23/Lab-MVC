@@ -14,6 +14,6 @@ router.get("/static", getVitaSureStatic);
 router.get("/requisition", getVitaSureForm);
 
 // Submit route
-router.post("/submitVitaSure", submitVitaSureRequisition);
+router.post("/submit", submitVitaSureRequisition);
 
 module.exports = router;

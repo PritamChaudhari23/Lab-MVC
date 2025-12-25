@@ -14,6 +14,6 @@ router.get("/static", getQuantiaDxStatic);
 router.get("/requisition", getQuantiaDxForm);
 
 // Submit route
-router.post("/submitQuantiadx", submitQuantiaDxRequisition);
+router.post("/submit", submitQuantiaDxRequisition);
 
 module.exports = router;
