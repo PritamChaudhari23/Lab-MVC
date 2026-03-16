@@ -1,5 +1,6 @@
 const path = require("path");
 const LabOrders = require("../models/LabOrder");
+const FormDocument = require("../models/FormDocument");
 const { fetchAndFormatPatientData } = require("../EHR/handlers/ehr");
 const { generateAndUploadPDF } = require("../utils/pdfUtils");
 const { v4: uuidv4 } = require("uuid");
@@ -18,7 +19,7 @@ const getNeuraPathStatic = (req, res) => {
 
 const getNeuraPathForm = async (req, res) => {
   try {
-    const patientEHR = await fetchAndFormatPatientData();
+    const patientEHR = await fetchAndFormatPatientData(req.query.patient);
     res.render("neurapath_diagnostics", { ehrData: patientEHR });
   } catch (err) {
     console.error(err);
@@ -59,20 +60,30 @@ const submitNeuraPathRequisition = async (req, res) => {
     const newRequisition = new LabOrders(order);
     const savedOrder = await newRequisition.save();
 
-    // 2. Generate PDF + Upload to S3
-    const fileKey = `requisitions/neurapath/${uuidv4()}.pdf`;
-    const { s3Url } = await generateAndUploadPDF(
-      "neurapath_diagnostics",
-      {
-        ehrData: order.patientData,
-        tests: order.labTest.testSelected
-      },
-      fileKey
-    );
+    // // 2. Generate PDF + Upload to S3
+    // const fileKey = `requisitions/neurapath/${uuidv4()}.pdf`;
+    // const { s3Url } = await generateAndUploadPDF(
+    //   "neurapath_diagnostics",
+    //   {
+    //     ehrData: order.patientData,
+    //     tests: order.labTest.testSelected
+    //   },
+    //   fileKey
+    // );
 
-    // 3. Save PDF URL in order
-    savedOrder.pdfUrl = s3Url;
-    await savedOrder.save();
+    // // 3. Save PDF URL in order
+    // savedOrder.pdfUrl = s3Url;
+    // await savedOrder.save();
+
+    // 4. Save metadata in FormDocument collection for easy lookup
+    await FormDocument.create({
+      formId: savedOrder._id.toString(),
+      userId: order.patientData.patient.email,
+      // fileName: fileKey.split("/").pop(),
+      fileName: 'NeuraPath_Diagnostics_' + savedOrder._id.toString() + '.pdf',
+      s3Url: 'https://your-s3-bucket-name.s3.amazonaws.com/' + savedOrder._id.toString(), // Update with actual bucket URL
+    });
+
     console.log("NeuraPath Lab Order Submitted:", savedOrder);
     res.send("NeuraPath Diagnostics form submitted and PDF generated!");
   } catch (error) {
